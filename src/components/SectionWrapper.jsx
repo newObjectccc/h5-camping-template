@@ -17,7 +17,7 @@ const SectionWrapper = (props, ref) => {
   }, [current])
 
   return (
-    <section ref={ref} {...restProps} style={styles} className={`flex flex-col items-center p-6 w-[100vw] h-[100vh] ${className ?? ''}`}>
+    <section ref={ref} {...restProps} style={styles} className={`flex flex-col items-center p-6 w-[100vw] h-full ${className ?? ''}`}>
       <div className={`w-full h-full p-4 backdrop-blur-xl shadow-lg`}>
         <img className="shadow-md rounded-t-xl" src={imgSrc}/>
         <div className="bg-white rounded-b-xl p-4">
