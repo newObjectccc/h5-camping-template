@@ -26,7 +26,7 @@ const SignIn = (props, ref) => {
   }, [])
 
   return (
-    <div className={`common-bg fixed top-0 left-0 h-[100vh] w-[100vw] z-[999] flex-col items-center justify-between p-6 ${inter.className} ${className ?? ''}`} ref={ref}>
+    <div className={`common-bg fixed top-0 left-0 h-full w-[100vw] z-[999] flex-col items-center justify-between p-6 ${inter.className} ${className ?? ''}`} ref={ref}>
       <div className="flex justify-start w-full" onClick={onBackTo}>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
           <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />

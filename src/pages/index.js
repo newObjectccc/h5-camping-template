@@ -84,6 +84,7 @@ const sectionList = [
 
 export default function Home() {
   const signInRef = React.useRef(null)
+  const isSignInShow = React.useRef(true)
   const listRef = React.useRef(null)
   const moveRef = React.useRef({})
   const [currentIdx, setCurrentIdx] = React.useState(0)
@@ -104,7 +105,7 @@ export default function Home() {
       const distanceY = moveParams.endY - moveParams.startY
       const lastTime = moveParams.touchendTime - moveParams.touchstartTime
       moveRef.current = {}
-      if (!distanceY || Math.abs(distanceY) < 20 || lastTime > 2000) return
+      if (!distanceY || Math.abs(distanceY) < 20 || lastTime > 2000 || isSignInShow.current) return
       if (distanceY > 0) {
         // 向下滑动
         onPrev()
@@ -127,6 +128,7 @@ export default function Home() {
       opacity: 0,
       duration: .4,
     })
+    isSignInShow.current = false
   }
 
   const submitHandler = (evt) => {
@@ -139,6 +141,7 @@ export default function Home() {
       opacity: 1,
       duration: .4,
     })
+    isSignInShow.current = true
   }
 
   const onNext = () => {
@@ -161,13 +164,14 @@ export default function Home() {
 
   return (
     <main
-      className={`flex h-full min-h-screen flex-col items-center justify-between ${inter.className}`}
+      style={{ height: '100svh' }}
+      className={`flex h-full flex-col items-center justify-between ${inter.className}`}
     >
       <SignIn ref={signInRef} onBackTo={backToHandler} onSubmit={submitHandler} />
       {/* <div className="overflow-hidden w-full h-screen" ref={listRef}>
         <SectionWrapper className="animate-flip-in-y" key={sectionList[currentIdx].src} item={sectionList[currentIdx]}></SectionWrapper>
       </div> */}
-      <div className="overflow-hidden w-full h-screen" ref={listRef}>
+      <div className="overflow-hidden w-full h-full" ref={listRef}>
         {sectionList.map((item, index) => (
           <SectionWrapper current={currentIdx} idx={index} className={`${index === currentIdx ? 'block animate-bounce-in' : 'hidden'}`} key={item.src} item={item}>
             {sectionList.length - 1 === index && (
@@ -182,12 +186,12 @@ export default function Home() {
         )
         )}
       </div>
-      <svg onClick={onPrev} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 mx-auto fixed top-2 z-[998] animate-bounce">
+      {currentIdx !== 0 && <svg onClick={onPrev} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 mx-auto fixed top-2 z-[998] animate-bounce">
         <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l7.5-7.5 7.5 7.5m-15 6l7.5-7.5 7.5 7.5" />
-      </svg>
-      <svg onClick={onNext} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 mx-auto fixed bottom-2 z-[998] animate-bounce">
+      </svg>}
+      {currentIdx !== sectionList.length - 1 && <svg onClick={onNext} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 mx-auto fixed bottom-2 z-[998] animate-bounce">
         <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 5.25l-7.5 7.5-7.5-7.5m15 6l-7.5 7.5-7.5-7.5" />
-      </svg>
+      </svg>}
     </main>
   )
 }
